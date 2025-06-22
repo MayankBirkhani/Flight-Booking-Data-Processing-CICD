@@ -18,7 +18,7 @@ default_args = {
 with DAG(
     dag_id="flight_booking_dataproc_bq_dag",
     default_args=default_args,
-    schedule_interval=None  #Trigger manually or on-demand
+    schedule_interval=None,  #Trigger manually or on-demand
     catchup=False,
 ) as dag:
     
@@ -36,7 +36,7 @@ with DAG(
     
     
     # Generate a unique batch ID using UUID
-    batch_id = f"flight-booking-batch-{env}-{str(uuid.uuid4()[:8])}"
+    batch_id = f"flight-booking-batch-{env}-{str(uuid.uuid4())[:8]}"
     
     
     # Task 1: File sensor for GCS
