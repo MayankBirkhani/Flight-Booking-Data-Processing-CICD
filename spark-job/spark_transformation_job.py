@@ -1,6 +1,6 @@
 import argparse
 from pyspark.sql import SparkSession
-from pyspark.sql import col, count, avg, when, lit, expr
+from pyspark.sql.functions import col, count, avg, when, lit, expr
 import logging
 import sys
 
@@ -8,7 +8,7 @@ import sys
 # Initialize Logging
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s -%(message)s"
+    format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 
@@ -65,7 +65,7 @@ def main(env, bq_project, bq_dataset, transformed_table, route_insights_table, o
         
         # Write route insights to BigQuery
         logger.info(f"Writing route insights to BigQuery table: {bq_project}:{bq_dataset}.{route_insights_table}")
-        transformed_data.write \
+        route_insights.write \
             .format("bigquery") \
             .option("table",f"{bq_project}:{bq_dataset}.{route_insights_table}") \
             .option("writeMethod","direct") \
@@ -74,7 +74,7 @@ def main(env, bq_project, bq_dataset, transformed_table, route_insights_table, o
 
         # Write booking origin insights to BigQuery
         logger.info(f"Writing route insights to BigQuery table: {bq_project}:{bq_dataset}.{origin_insights_table}")
-        transformed_data.write \
+        booking_origin_insights.write \
             .format("bigquery") \
             .option("table",f"{bq_project}:{bq_dataset}.{origin_insights_table}") \
             .option("writeMethod","direct") \
@@ -83,7 +83,7 @@ def main(env, bq_project, bq_dataset, transformed_table, route_insights_table, o
          
         logger.info("Data written to BigQuery successfully")
     
-    except exception as e:
+    except Exception as e:
         logger.error(f"An error occurred: {e}")
         sys.exit(1)
     
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     parser.add_argument("--route_insights_table", required=True, help="BigQuery table for route insights ")
     parser.add_argument("--origin_insights_table", required=True, help="BigQuery table for booking origin insights ")
     
-    args = parser.pars_args()
+    args = parser.parse_args()
     
     
     # Call the 
