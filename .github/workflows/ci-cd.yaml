@@ -26,7 +26,7 @@ jobs:
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_-id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
       
       # Upload `variables.json` to composer bucket
       - name : Upload variables JSON to GCS
@@ -73,7 +73,7 @@ jobs:
       - name: Setup Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_-id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
       
       # Upload `variables.json` to composer bucket
       - name : Upload variables JSON to GCS
